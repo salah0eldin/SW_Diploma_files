@@ -1,6 +1,15 @@
+# =================================================
+# CMakeLists.txt
+# Build configuration for Sudoku Qt Application
+# =================================================
+
 cmake_minimum_required(VERSION 3.16)
 
-project(Sudoku VERSION 0.1 LANGUAGES CXX)
+project(Sudoku VERSION 1.0 LANGUAGES CXX)
+
+# =================================================
+# Qt Configuration
+# =================================================
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -12,11 +21,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+# =================================================
+# Source Files
+# =================================================
+
+# Core application files
 set(PROJECT_SOURCES
-        main.cpp
-        sudoku.cpp
-        sudoku.h
-        sudoku.ui
+    main.cpp
+    
+    # UI Window
+    SudokuWindow.h
+    SudokuWindow.cpp
+    
+    # Custom Widgets
+    SudokuCell.h
+    SudokuCell.cpp
+    
+    # Qt UI Form
+    sudoku.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

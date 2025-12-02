@@ -1,11 +1,31 @@
-#include "sudoku.h"
+// =================================================
+// main.cpp
+// Entry point for the Sudoku Qt application
+// =================================================
+
+#include "SudokuWindow.h"
 
 #include <QApplication>
 
+// =================================================
+// Main Function
+// =================================================
+
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    sudoku w;
-    w.show();
-    return a.exec();
+    // ------------------------------------------------------
+    // Create Qt application instance
+    // ------------------------------------------------------
+    QApplication app(argc, argv);
+
+    // ------------------------------------------------------
+    // Create and show main window
+    // ------------------------------------------------------
+    SudokuWindow window;
+    window.show();
+
+    // ------------------------------------------------------
+    // Start event loop
+    // ------------------------------------------------------
+    return app.exec();
 }
