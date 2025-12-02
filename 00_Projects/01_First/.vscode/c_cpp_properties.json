@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/salah0eldin/Programs/Qt/6.9.3/gcc_64/include/**",
+                "/mnt/d_drive/Learning/SW_Diploma/00_Projects/01_First/Sudoku",
+                "Sudoku/build/Sudoku_autogen/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}
