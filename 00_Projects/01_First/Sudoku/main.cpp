@@ -1,10 +1,9 @@
 // =================================================
 // main.cpp
-// Entry point for the Sudoku Qt application
+// Entry point for Sudoku Qt application
 // =================================================
 
-#include "SudokuWindow.h"
-
+#include "SudokuGame.hpp"
 #include <QApplication>
 
 // =================================================
@@ -17,12 +16,19 @@ int main(int argc, char *argv[])
     // Create Qt application instance
     // ------------------------------------------------------
     QApplication app(argc, argv);
+    
+    // ------------------------------------------------------
+    // Set application metadata
+    // ------------------------------------------------------
+    QApplication::setApplicationName("Sudoku");
+    QApplication::setApplicationVersion("1.0");
+    QApplication::setOrganizationName("SW Diploma");
 
     // ------------------------------------------------------
-    // Create and show main window
+    // Create and show main game window
     // ------------------------------------------------------
-    SudokuWindow window;
-    window.show();
+    SudokuGame gameWindow;
+    gameWindow.show();
 
     // ------------------------------------------------------
     // Start event loop

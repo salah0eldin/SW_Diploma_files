@@ -25,17 +25,22 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 # Source Files
 # =================================================
 
-# Core application files
+# Core application files (following specification structure)
 set(PROJECT_SOURCES
+    # Entry point
     main.cpp
     
-    # UI Window
-    SudokuWindow.h
-    SudokuWindow.cpp
+    # Core logic (Board representation & validation)
+    SudokuBoard.hpp
+    SudokuBoard.cpp
     
-    # Custom Widgets
-    SudokuCell.h
-    SudokuCell.cpp
+    # Solver (Backtracking algorithm)
+    SudokuSolver.hpp
+    SudokuSolver.cpp
+    
+    # Game logic with Qt GUI integration
+    SudokuGame.hpp
+    SudokuGame.cpp
     
     # Qt UI Form
     sudoku.ui
@@ -90,3 +95,13 @@ install(TARGETS Sudoku
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(Sudoku)
 endif()
+
+# =================================================
+# Custom Target - Run the Application
+# =================================================
+add_custom_target(run
+    COMMAND ${CMAKE_BINARY_DIR}/Sudoku
+    DEPENDS Sudoku
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Running Sudoku application..."
+)
