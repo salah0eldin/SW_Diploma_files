@@ -14,9 +14,18 @@
 // =================================================
 
 SudokuBoard::SudokuBoard()
-    : m_board(9, std::vector<int>(9, 0))
-    , m_fixedCells(9, std::vector<bool>(9, false))
+    : m_board{}
+    , m_fixedCells{}
 {
+    // ------------------------------------------------------
+    // Initialize all cells to empty and not fixed
+    // ------------------------------------------------------
+    for (int row = 0; row < SUDOKU_SIZE; ++row) {
+        for (int col = 0; col < SUDOKU_SIZE; ++col) {
+            m_board[row][col] = 0;
+            m_fixedCells[row][col] = false;
+        }
+    }
 }
 
 SudokuBoard::~SudokuBoard()
@@ -81,56 +90,20 @@ bool SudokuBoard::isEmpty(int row, int col) const
 bool SudokuBoard::isValidPlacement(int row, int col, int value) const
 {
     // ------------------------------------------------------
-    // Check if placing value at (row, col) violates rules
-    // ------------------------------------------------------
-    if (!isValidIndex(row, col) || value < 1 || value > 9) {
-        return false;
-    }
-    
-    // ------------------------------------------------------
-    // Temporarily store current value
-    // ------------------------------------------------------
-    int currentValue = m_board[row][col];
-    
-    // ------------------------------------------------------
     // Check row, column, and 3x3 box constraints
     // ------------------------------------------------------
-    for (int i = 0; i < 9; ++i) {
-        // Check row
-        if (i != col && m_board[row][i] == value) {
-            return false;
-        }
-        
-        // Check column
-        if (i != row && m_board[i][col] == value) {
-            return false;
-        }
-    }
-    
-    // ------------------------------------------------------
-    // Check 3x3 box
-    // ------------------------------------------------------
-    int boxRow = (row / 3) * 3;
-    int boxCol = (col / 3) * 3;
-    
-    for (int r = boxRow; r < boxRow + 3; ++r) {
-        for (int c = boxCol; c < boxCol + 3; ++c) {
-            if ((r != row || c != col) && m_board[r][c] == value) {
-                return false;
-            }
-        }
-    }
-    
-    return true;
+    return isValidRow(row, value) && 
+           isValidCol(col, value) && 
+           isValidBox(row, col, value);
 }
 
 bool SudokuBoard::isValidRow(int row, int value) const
 {
-    if (row < 0 || row >= 9 || value < 1 || value > 9) {
+    if (row < 0 || row >= SUDOKU_SIZE || value < 1 || value > SUDOKU_SIZE) {
         return false;
     }
     
-    for (int col = 0; col < 9; ++col) {
+    for (int col = 0; col < SUDOKU_SIZE; ++col) {
         if (m_board[row][col] == value) {
             return false;
         }
@@ -140,11 +113,11 @@ bool SudokuBoard::isValidRow(int row, int value) const
 
 bool SudokuBoard::isValidCol(int col, int value) const
 {
-    if (col < 0 || col >= 9 || value < 1 || value > 9) {
+    if (col < 0 || col >= SUDOKU_SIZE || value < 1 || value > SUDOKU_SIZE) {
         return false;
     }
     
-    for (int row = 0; row < 9; ++row) {
+    for (int row = 0; row < SUDOKU_SIZE; ++row) {
         if (m_board[row][col] == value) {
             return false;
         }
@@ -176,8 +149,8 @@ bool SudokuBoard::isBoardValid() const
     // ------------------------------------------------------
     // Check if current board state is valid (no conflicts)
     // ------------------------------------------------------
-    for (int row = 0; row < 9; ++row) {
-        for (int col = 0; col < 9; ++col) {
+    for (int row = 0; row < SUDOKU_SIZE; ++row) {
+        for (int col = 0; col < SUDOKU_SIZE; ++col) {
             int value = m_board[row][col];
             
             if (value != 0) {
@@ -200,8 +173,8 @@ bool SudokuBoard::isSolved() const
     // ------------------------------------------------------
     // Check if board is completely filled and valid
     // ------------------------------------------------------
-    for (int row = 0; row < 9; ++row) {
-        for (int col = 0; col < 9; ++col) {
+    for (int row = 0; row < SUDOKU_SIZE; ++row) {
+        for (int col = 0; col < SUDOKU_SIZE; ++col) {
             if (m_board[row][col] == 0) {
                 return false;
             }
@@ -217,8 +190,8 @@ bool SudokuBoard::isSolved() const
 
 void SudokuBoard::clearBoard()
 {
-    for (int row = 0; row < 9; ++row) {
-        for (int col = 0; col < 9; ++col) {
+    for (int row = 0; row < SUDOKU_SIZE; ++row) {
+        for (int col = 0; col < SUDOKU_SIZE; ++col) {
             if (!m_fixedCells[row][col]) {
                 m_board[row][col] = 0;
             }
@@ -232,16 +205,74 @@ void SudokuBoard::copyBoard(const SudokuBoard& other)
     m_fixedCells = other.m_fixedCells;
 }
 
-std::vector<std::vector<int>> SudokuBoard::getBoard() const
+SudokuGrid SudokuBoard::getBoard() const
 {
     return m_board;
 }
 
-void SudokuBoard::setBoard(const std::vector<std::vector<int>>& board)
+void SudokuBoard::setBoard(const SudokuGrid& board)
 {
-    if (board.size() == 9 && board[0].size() == 9) {
-        m_board = board;
+    m_board = board;
+}
+
+// ------------------------------------------------------
+// Row / Column / Box Accessors
+// ------------------------------------------------------
+
+SudokuLine SudokuBoard::getRow(int row) const
+{
+    SudokuLine result{};
+
+    if (!isValidIndex(row, 0)) {
+        return result;
     }
+
+    for (int col = 0; col < SUDOKU_SIZE; ++col) {
+        result[col] = m_board[row][col];
+    }
+
+    return result;
+}
+
+SudokuLine SudokuBoard::getColumn(int col) const
+{
+    SudokuLine result{};
+
+    if (!isValidIndex(0, col)) {
+        return result;
+    }
+
+    for (int row = 0; row < SUDOKU_SIZE; ++row) {
+        result[row] = m_board[row][col];
+    }
+
+    return result;
+}
+
+SudokuBox SudokuBoard::getBox(int boxRow, int boxCol) const
+{
+    SudokuBox result{};
+
+    // ------------------------------------------------------
+    // boxRow and boxCol are box indices in [0..2]
+    // ------------------------------------------------------
+    int startRow = boxRow * 3;
+    int startCol = boxCol * 3;
+
+    if (!isValidIndex(startRow, startCol)) {
+        return result;
+    }
+
+    int index = 0;
+    for (int r = startRow; r < startRow + 3; ++r) {
+        for (int c = startCol; c < startCol + 3; ++c) {
+            if (index < SUDOKU_SIZE) {
+                result[index++] = m_board[r][c];
+            }
+        }
+    }
+
+    return result;
 }
 
 // =================================================
@@ -265,8 +296,8 @@ bool SudokuBoard::isFixed(int row, int col) const
 
 void SudokuBoard::clearAllFixedMarks()
 {
-    for (int row = 0; row < 9; ++row) {
-        for (int col = 0; col < 9; ++col) {
+    for (int row = 0; row < SUDOKU_SIZE; ++row) {
+        for (int col = 0; col < SUDOKU_SIZE; ++col) {
             m_fixedCells[row][col] = false;
         }
     }
@@ -285,21 +316,24 @@ bool SudokuBoard::loadFromFile(const std::string& filename)
     
     // ------------------------------------------------------
     // Read 9x9 grid from file
+    // Format: 0 = empty, 1-9 = user cell, -1 to -9 = fixed cell
     // ------------------------------------------------------
     clearAllFixedMarks();
     
-    for (int row = 0; row < 9; ++row) {
-        for (int col = 0; col < 9; ++col) {
+    for (int row = 0; row < SUDOKU_SIZE; ++row) {
+        for (int col = 0; col < SUDOKU_SIZE; ++col) {
             int value;
             if (!(file >> value)) {
                 return false;
             }
             
-            m_board[row][col] = value;
-            
-            // Mark non-zero cells as fixed
-            if (value != 0) {
+            // Negative values indicate fixed cells
+            if (value < 0) {
+                m_board[row][col] = -value;
                 m_fixedCells[row][col] = true;
+            } else {
+                m_board[row][col] = value;
+                m_fixedCells[row][col] = false;
             }
         }
     }
@@ -317,11 +351,20 @@ bool SudokuBoard::saveToFile(const std::string& filename) const
     
     // ------------------------------------------------------
     // Write 9x9 grid to file
+    // Format: 0 = empty, 1-9 = user cell, -1 to -9 = fixed cell
     // ------------------------------------------------------
-    for (int row = 0; row < 9; ++row) {
-        for (int col = 0; col < 9; ++col) {
-            file << m_board[row][col];
-            if (col < 8) {
+    for (int row = 0; row < SUDOKU_SIZE; ++row) {
+        for (int col = 0; col < SUDOKU_SIZE; ++col) {
+            int value = m_board[row][col];
+            
+            // Write negative value if cell is fixed
+            if (m_fixedCells[row][col] && value != 0) {
+                file << -value;
+            } else {
+                file << value;
+            }
+            
+            if (col < SUDOKU_SIZE - 1) {
                 file << " ";
             }
         }
@@ -341,9 +384,9 @@ std::string SudokuBoard::toString() const
     std::ostringstream oss;
     
     oss << "-------------------------------------\n";
-    
-    for (int row = 0; row < 9; ++row) {
-        for (int col = 0; col < 9; ++col) {
+
+    for (int row = 0; row < SUDOKU_SIZE; ++row) {
+        for (int col = 0; col < SUDOKU_SIZE; ++col) {
             if (m_board[row][col] == 0) {
                 oss << ". ";
             } else {
@@ -351,14 +394,14 @@ std::string SudokuBoard::toString() const
             }
             
             // Add vertical separators for 3x3 boxes
-            if ((col + 1) % 3 == 0 && col < 8) {
+            if ((col + 1) % 3 == 0 && col < SUDOKU_SIZE - 1) {
                 oss << "| ";
             }
         }
         oss << "\n";
         
         // Add horizontal separators for 3x3 boxes
-        if ((row + 1) % 3 == 0 && row < 8) {
+        if ((row + 1) % 3 == 0 && row < SUDOKU_SIZE - 1) {
             oss << "-------------------------------------\n";
         }
     }
@@ -379,5 +422,5 @@ void SudokuBoard::print() const
 
 bool SudokuBoard::isValidIndex(int row, int col) const
 {
-    return row >= 0 && row < 9 && col >= 0 && col < 9;
+    return row >= 0 && row < SUDOKU_SIZE && col >= 0 && col < SUDOKU_SIZE;
 }

@@ -3,8 +3,7 @@
 // Game logic and Qt GUI integration
 // =================================================
 
-#ifndef SUDOKUGAME_HPP
-#define SUDOKUGAME_HPP
+#pragma once
 
 #include "SudokuBoard.hpp"
 #include "SudokuSolver.hpp"
@@ -32,25 +31,25 @@ class SudokuCell : public QLineEdit
 public:
     explicit SudokuCell(int row, int col, QWidget *parent = nullptr);
     
-    // =================================================
+    // ------------------------------------------------------
     // Accessors
-    // =================================================
+    // ------------------------------------------------------
     int row() const { return m_row; }
     int col() const { return m_col; }
     int value() const;
     
-    // =================================================
+    // ------------------------------------------------------
     // State Management
-    // =================================================
+    // ------------------------------------------------------
     void setInitial(bool initial);
     bool isInitial() const { return m_initial; }
     
     void setValue(int val);
     void clearValue();
     
-    // =================================================
+    // ------------------------------------------------------
     // Visual State
-    // =================================================
+    // ------------------------------------------------------
     void setHighlighted(bool highlighted);
     void setError(bool error);
     void setSelected(bool selected);
@@ -64,9 +63,9 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 private:
-    // =================================================
+    // ------------------------------------------------------
     // Private Data Members
-    // =================================================
+    // ------------------------------------------------------
     int m_row;
     int m_col;
     bool m_initial;
@@ -74,9 +73,9 @@ private:
     bool m_error;
     bool m_selected;
     
-    // =================================================
+    // ------------------------------------------------------
     // Private Methods
-    // =================================================
+    // ------------------------------------------------------
     void updateStyle();
 };
 
@@ -93,16 +92,16 @@ public:
     ~SudokuGame();
 
 private slots:
-    // =================================================
+    // ------------------------------------------------------
     // Cell Interaction Slots
-    // =================================================
+    // ------------------------------------------------------
     void onCellSelected(int row, int col);
     void onCellValueChanged(int row, int col, int value);
     void onNumberPadClicked(int number);
     
-    // =================================================
+    // ------------------------------------------------------
     // Game Action Slots
-    // =================================================
+    // ------------------------------------------------------
     void onNewGame();
     void onLoadPuzzle();
     void onSavePuzzle();
@@ -112,9 +111,9 @@ private slots:
     void onAbout();
 
 private:
-    // =================================================
+    // ------------------------------------------------------
     // Private Data Members
-    // =================================================
+    // ------------------------------------------------------
     Ui::SudokuGame *ui;
     
     SudokuBoard m_board;                              // Core board logic
@@ -127,28 +126,26 @@ private:
     int m_selectedRow;                                // Currently selected cell
     int m_selectedCol;
     
-    // =================================================
+    // ------------------------------------------------------
     // Private Setup Methods
-    // =================================================
+    // ------------------------------------------------------
     void setupGrid();
     void setupNumberPad();
     void connectSignals();
     
-    // =================================================
+    // ------------------------------------------------------
     // Private Game Logic Methods
-    // =================================================
+    // ------------------------------------------------------
     void loadSamplePuzzle();
     void syncBoardToGUI();
     void syncGUIToBoard();
     
-    // =================================================
+    // ------------------------------------------------------
     // Private UI Helper Methods
-    // =================================================
+    // ------------------------------------------------------
     void updateStatus(const QString &message);
     void highlightRelatedCells(int row, int col);
     void clearHighlights();
     void showErrors();
     void clearErrors();
 };
-
-#endif // SUDOKUGAME_HPP
