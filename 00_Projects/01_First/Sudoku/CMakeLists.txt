@@ -42,6 +42,10 @@ set(PROJECT_SOURCES
     SudokuGenerator.hpp
     SudokuGenerator.cpp
     
+    # Advanced Checks (Optional advanced techniques)
+    SudokuAdvancedChecks.hpp
+    SudokuAdvancedChecks.cpp
+    
     # Game logic with Qt GUI integration
     SudokuGame.hpp
     SudokuGame.cpp

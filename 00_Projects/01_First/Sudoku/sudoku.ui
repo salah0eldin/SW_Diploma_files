@@ -332,6 +332,13 @@ QWidget#numberPadWidget {
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="hintButton">
+        <property name="text">
+         <string>Hint</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="checkButton">
         <property name="text">
          <string>Check</string>

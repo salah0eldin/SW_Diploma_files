@@ -373,6 +373,7 @@ void SudokuGame::connectSignals()
     connect(ui->saveButton, &QPushButton::clicked, this, &SudokuGame::onSavePuzzle);
     connect(ui->solveButton, &QPushButton::clicked, this, &SudokuGame::onSolve);
     connect(ui->checkButton, &QPushButton::clicked, this, &SudokuGame::onCheck);
+    connect(ui->hintButton, &QPushButton::clicked, this, &SudokuGame::onHint);
     connect(ui->clearCellButton, &QPushButton::clicked, this, &SudokuGame::onClearCell);
     connect(ui->clearBoardButton, &QPushButton::clicked, this, &SudokuGame::onClearBoard);
     
@@ -766,6 +767,50 @@ void SudokuGame::onClearBoard()
         
         clearErrors();
         updateStatus("Board cleared! All non-fixed cells have been erased.");
+    }
+}
+
+void SudokuGame::onHint()
+{
+    // ------------------------------------------------------
+    // Sync GUI to board
+    // ------------------------------------------------------
+    syncGUIToBoard();
+    
+    // ------------------------------------------------------
+    // Find a hint using advanced techniques
+    // ------------------------------------------------------
+    SudokuHint hint;
+    if (m_advancedChecks.findHint(m_board, hint)) {
+        // ------------------------------------------------------
+        // Highlight the hint cell
+        // ------------------------------------------------------
+        clearHighlights();
+        m_cells[hint.row][hint.col]->setSelected(true);
+        m_cells[hint.row][hint.col]->setFocus();
+        
+        // ------------------------------------------------------
+        // Show hint description
+        // ------------------------------------------------------
+        QString message = QString::fromStdString(hint.description);
+        message += QString("\n\nCell: Row %1, Column %2\nValue: %3")
+                   .arg(hint.row + 1).arg(hint.col + 1).arg(hint.value);
+        
+        QMessageBox::information(this, "Hint", message);
+        
+        updateStatus(QString::fromStdString(hint.description));
+    } else {
+        // ------------------------------------------------------
+        // No hints found - either solved or needs backtracking
+        // ------------------------------------------------------
+        if (m_board.isSolved()) {
+            QMessageBox::information(this, "Hint", "Puzzle is already solved!");
+            updateStatus("Puzzle is already solved!");
+        } else {
+            QMessageBox::information(this, "Hint", 
+                "No simple hints available. This puzzle requires advanced solving techniques or trial-and-error.");
+            updateStatus("No hints available - try solving or using Check to verify.");
+        }
     }
 }
 

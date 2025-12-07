@@ -17,6 +17,7 @@
 #include "SudokuBoard.hpp"
 #include "SudokuSolver.hpp"
 #include "SudokuGenerator.hpp"
+#include "SudokuAdvancedChecks.hpp"
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QLineEdit>
@@ -121,6 +122,7 @@ private slots:
     void onCheck();
     void onClearCell();
     void onClearBoard();
+    void onHint();
     void onAbout();
 
 private:
@@ -132,6 +134,7 @@ private:
     SudokuBoard m_board;                              // Core board logic
     SudokuSolver m_solver;                            // Solver logic
     SudokuGenerator m_generator;                      // Puzzle generator
+    SudokuAdvancedChecks m_advancedChecks;            // Advanced techniques
     
     QVector<QVector<SudokuCell*>> m_cells;            // GUI cells
     QVector<QPushButton*> m_numberPadButtons;         // Number pad buttons
