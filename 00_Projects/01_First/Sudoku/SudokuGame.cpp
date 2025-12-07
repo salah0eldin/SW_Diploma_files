@@ -643,6 +643,19 @@ void SudokuGame::onNewGame()
         clearHighlights();
         clearErrors();
         
+        // Update pencil marks if they're visible
+        if (m_pencilMarksVisible) {
+            m_advancedChecks.calculateCandidates(m_board);
+            for (int row = 0; row < 9; ++row) {
+                for (int col = 0; col < 9; ++col) {
+                    if (m_cells[row][col]->value() == 0) {
+                        std::set<int> availableMoves = m_advancedChecks.getCandidates(row, col);
+                        m_cells[row][col]->updateAvailableMoves(availableMoves);
+                    }
+                }
+            }
+        }
+        
         QString difficultyName = ui->difficultyCombo->currentText();
         updateStatus(QString("New %1 puzzle generated! Select a cell to begin.").arg(difficultyName));
     } else {
@@ -870,20 +883,23 @@ void SudokuGame::onToggleNotes()
 {
     m_pencilMarksVisible = !m_pencilMarksVisible;
     
+    // Calculate candidates once using advanced checks
+    if (m_pencilMarksVisible) {
+        // Sync GUI values to board first
+        syncGUIToBoard();
+        // Now calculate candidates
+        m_advancedChecks.calculateCandidates(m_board);
+    }
+    
     // Update all cells to show/hide pencil marks
     for (int row = 0; row < 9; ++row) {
         for (int col = 0; col < 9; ++col) {
             SudokuCell* cell = m_cells[row][col];
             cell->setPencilMarksVisible(m_pencilMarksVisible);
             
-            // Calculate available moves for empty cells
+            // Get available moves from advanced checks for empty cells
             if (cell->value() == 0 && m_pencilMarksVisible) {
-                std::set<int> availableMoves;
-                for (int num = 1; num <= 9; ++num) {
-                    if (m_board.isValidPlacement(row, col, num)) {
-                        availableMoves.insert(num);
-                    }
-                }
+                std::set<int> availableMoves = m_advancedChecks.getCandidates(row, col);
                 cell->updateAvailableMoves(availableMoves);
             }
         }
