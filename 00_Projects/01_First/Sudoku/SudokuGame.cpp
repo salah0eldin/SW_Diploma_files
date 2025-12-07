@@ -296,10 +296,10 @@ void SudokuGame::setupNumberPad()
         "   color: #eaf0f1;"
         "   border: none;"
         "   border-radius: 8px;"
-        "   font-size: 18px;"
+        "   font-size: 16px;"
         "   font-weight: bold;"
-        "   min-width: 50px;"
-        "   min-height: 50px;"
+        "   min-width: 20px;"
+        "   min-height: 20px;"
         "}"
         "QPushButton:hover {"
         "   background-color: #16537e;"
@@ -314,7 +314,7 @@ void SudokuGame::setupNumberPad()
     for (int i = 1; i <= 9; ++i) {
         QPushButton *btn = new QPushButton(QString::number(i), ui->numberPadWidget);
         btn->setStyleSheet(buttonStyle);
-        btn->setFixedSize(50, 50);
+        btn->setFixedSize(20, 20);
         
         connect(btn, &QPushButton::clicked, this, [this, i]() {
             onNumberPadClicked(i);
@@ -334,10 +334,10 @@ void SudokuGame::setupNumberPad()
         "   color: #eaf0f1;"
         "   border: none;"
         "   border-radius: 8px;"
-        "   font-size: 18px;"
+        "   font-size: 16px;"
         "   font-weight: bold;"
-        "   min-width: 50px;"
-        "   min-height: 50px;"
+        "   min-width: 20px;"
+        "   min-height: 20px;"
         "}"
         "QPushButton:hover {"
         "   background-color: #fab1a0;"
@@ -346,7 +346,7 @@ void SudokuGame::setupNumberPad()
         "   background-color: #d63031;"
         "}"
     );
-    eraseBtn->setFixedSize(50, 50);
+    eraseBtn->setFixedSize(20, 20);
     connect(eraseBtn, &QPushButton::clicked, this, &SudokuGame::onClearCell);
     ui->numberPadLayout->addWidget(eraseBtn);
 }
@@ -361,7 +361,8 @@ void SudokuGame::connectSignals()
     connect(ui->saveButton, &QPushButton::clicked, this, &SudokuGame::onSavePuzzle);
     connect(ui->solveButton, &QPushButton::clicked, this, &SudokuGame::onSolve);
     connect(ui->checkButton, &QPushButton::clicked, this, &SudokuGame::onCheck);
-    connect(ui->clearButton, &QPushButton::clicked, this, &SudokuGame::onClearCell);
+    connect(ui->clearCellButton, &QPushButton::clicked, this, &SudokuGame::onClearCell);
+    connect(ui->clearBoardButton, &QPushButton::clicked, this, &SudokuGame::onClearBoard);
     
     // ------------------------------------------------------
     // Connect menu action signals
@@ -371,6 +372,7 @@ void SudokuGame::connectSignals()
     connect(ui->actionSave, &QAction::triggered, this, &SudokuGame::onSavePuzzle);
     connect(ui->actionSolve, &QAction::triggered, this, &SudokuGame::onSolve);
     connect(ui->actionCheck, &QAction::triggered, this, &SudokuGame::onCheck);
+    connect(ui->actionClear, &QAction::triggered, this, &SudokuGame::onClearBoard);
     connect(ui->actionAbout, &QAction::triggered, this, &SudokuGame::onAbout);
     connect(ui->actionExit, &QAction::triggered, this, &QMainWindow::close);
 }
@@ -615,7 +617,7 @@ void SudokuGame::onCheck()
         for (int col = 0; col < 9; ++col) {
             int value = m_board.getValue(row, col);
             
-            if (value != 0) {
+            if (value != 0 && !m_board.isFixed(row, col)) {
                 // Temporarily clear to check validity
                 m_board.setValue(row, col, 0);
                 bool valid = m_board.isValidPlacement(row, col, value);
@@ -662,6 +664,34 @@ void SudokuGame::onClearCell()
         }
     } else {
         updateStatus("Please select a cell first!");
+    }
+}
+
+void SudokuGame::onClearBoard()
+{
+    // ------------------------------------------------------
+    // Ask for confirmation
+    // ------------------------------------------------------
+    QMessageBox::StandardButton reply = QMessageBox::question(this, 
+        "Clear Board", 
+        "Are you sure you want to clear all non-fixed cells?",
+        QMessageBox::Yes | QMessageBox::No);
+    
+    if (reply == QMessageBox::Yes) {
+        // ------------------------------------------------------
+        // Clear all non-fixed cells
+        // ------------------------------------------------------
+        for (int row = 0; row < 9; ++row) {
+            for (int col = 0; col < 9; ++col) {
+                if (!m_board.isFixed(row, col)) {
+                    m_board.setValue(row, col, 0);
+                    m_cells[row][col]->clearValue();
+                }
+            }
+        }
+        
+        clearErrors();
+        updateStatus("Board cleared! All non-fixed cells have been erased.");
     }
 }
 

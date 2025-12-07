@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
-    <height>750</height>
+    <width>900</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>900</width>
-    <height>950</height>
+    <height>900</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -318,9 +318,16 @@ QWidget#numberPadWidget {
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="clearButton">
+       <widget class="QPushButton" name="clearCellButton">
         <property name="text">
          <string>Clear Cell</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="clearBoardButton">
+        <property name="text">
+         <string>Clear Board</string>
         </property>
        </widget>
       </item>

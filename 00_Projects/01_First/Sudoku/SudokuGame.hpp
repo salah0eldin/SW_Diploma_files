@@ -117,6 +117,7 @@ private slots:
     void onSolve();
     void onCheck();
     void onClearCell();
+    void onClearBoard();
     void onAbout();
 
 private:
