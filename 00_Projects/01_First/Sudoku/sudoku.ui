@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>900</height>
+    <width>1100</width>
+    <height>950</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>900</width>
-    <height>900</height>
+    <width>1100</width>
+    <height>950</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -32,9 +32,48 @@ QLabel#titleLabel {
 }
 
 QLabel#statusLabel {
-    color: #a4b0be;
+    color: #ffffff;
     font-size: 14px;
     padding: 5px;
+}
+
+QStatusBar {
+    background-color: #1a1a2e;
+    color: #ffffff;
+}
+
+QMenuBar {
+    background-color: #1a1a2e;
+    color: #eaf0f1;
+    border-bottom: 1px solid #0f3460;
+}
+
+QMenuBar::item {
+    background-color: transparent;
+    color: #eaf0f1;
+    padding: 8px 16px;
+}
+
+QMenuBar::item:selected {
+    background-color: #0f3460;
+}
+
+QMenuBar::item:pressed {
+    background-color: #16537e;
+}
+
+QMenu {
+    background-color: #1a1a2e;
+    color: #eaf0f1;
+    border: 1px solid #0f3460;
+}
+
+QMenu::item {
+    padding: 8px 32px;
+}
+
+QMenu::item:selected {
+    background-color: #0f3460;
 }
 
 QPushButton {
@@ -141,34 +180,20 @@ QWidget#numberPadWidget {
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="mainLayout">
     <property name="spacing">
-     <number>15</number>
+     <number>12</number>
     </property>
     <property name="leftMargin">
-     <number>30</number>
+     <number>20</number>
     </property>
     <property name="topMargin">
      <number>20</number>
     </property>
     <property name="rightMargin">
-     <number>30</number>
-    </property>
-    <property name="bottomMargin">
      <number>20</number>
     </property>
-    <item>
-     <layout class="QHBoxLayout" name="headerLayout">
-      <item>
-       <widget class="QLabel" name="titleLabel">
-        <property name="text">
-         <string>Sudoku</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
+    <property name="bottomMargin">
+     <number>12</number>
+    </property>
     <item>
      <layout class="QHBoxLayout" name="controlsLayout">
       <property name="spacing">
@@ -257,14 +282,14 @@ QWidget#numberPadWidget {
         <widget class="QWidget" name="gridContainer" native="true">
          <property name="minimumSize">
           <size>
-           <width>450</width>
-           <height>450</height>
+           <width>540</width>
+           <height>540</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>450</width>
-           <height>450</height>
+           <width>540</width>
+           <height>540</height>
           </size>
          </property>
         </widget>
@@ -302,7 +327,7 @@ QWidget#numberPadWidget {
     <item>
      <layout class="QHBoxLayout" name="actionLayout">
       <property name="spacing">
-       <number>15</number>
+       <number>5</number>
       </property>
       <item>
        <spacer name="actionSpacerLeft">
@@ -319,6 +344,24 @@ QWidget#numberPadWidget {
       </item>
       <item>
        <widget class="QPushButton" name="clearCellButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>Clear Cell</string>
         </property>
@@ -326,13 +369,77 @@ QWidget#numberPadWidget {
       </item>
       <item>
        <widget class="QPushButton" name="clearBoardButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>90</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>Clear Board</string>
         </property>
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="toggleNotesButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton { color: white; }</string>
+        </property>
+        <property name="text">
+         <string>Toggle Notes</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="hintButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>60</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>Hint</string>
         </property>
@@ -340,6 +447,24 @@ QWidget#numberPadWidget {
       </item>
       <item>
        <widget class="QPushButton" name="checkButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>60</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>Check</string>
         </property>
@@ -347,6 +472,24 @@ QWidget#numberPadWidget {
       </item>
       <item>
        <widget class="QPushButton" name="solveButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>60</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>Solve</string>
         </property>
@@ -369,6 +512,18 @@ QWidget#numberPadWidget {
     </item>
     <item>
      <widget class="QLabel" name="statusLabel">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>30</height>
+       </size>
+      </property>
       <property name="text">
        <string>Select a cell and enter a number</string>
       </property>
@@ -416,7 +571,6 @@ QWidget#numberPadWidget {
    <addaction name="menuGame"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
    <property name="text">
     <string>New Game</string>

@@ -33,17 +33,28 @@ SudokuCell::SudokuCell(int row, int col, QWidget *parent)
     , m_matchingNumber(false)
     , m_error(false)
     , m_selected(false)
+    , m_showPencilMarks(false)
 {
     setMaxLength(1);
     setAlignment(Qt::AlignCenter);
-    setFixedSize(48, 48);
+    setFixedSize(60, 60);
     
     QFont font = this->font();
-    font.setPointSize(18);
+    font.setPointSize(20);
     font.setBold(true);
     setFont(font);
     
+    // Create label overlay for grid display
+    m_gridLabel = new QLabel(this);
+    m_gridLabel->setAlignment(Qt::AlignCenter);
+    m_gridLabel->setGeometry(0, 0, 60, 60);
+    m_gridLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+    QFont gridFont("Courier", 9);
+    m_gridLabel->setFont(gridFont);
+    m_gridLabel->setStyleSheet("QLabel { color: #7f8c8d; background: transparent; }");
+    
     updateStyle();
+    updateDisplay();
     
     // ------------------------------------------------------
     // Connect text change to value change signal
@@ -58,6 +69,7 @@ SudokuCell::SudokuCell(int row, int col, QWidget *parent)
         } else {
             emit cellValueChanged(m_row, m_col, 0);
         }
+        updateDisplay();
     });
 }
 
@@ -106,6 +118,7 @@ void SudokuCell::setValue(int val)
     } else {
         clear();
     }
+    updateDisplay();
 }
 
 void SudokuCell::clearValue()
@@ -158,6 +171,42 @@ void SudokuCell::keyPressEvent(QKeyEvent *event)
     // Block all other input
     // ------------------------------------------------------
     event->ignore();
+}
+
+void SudokuCell::updateDisplay()
+{
+    // Show available moves only if cell is empty and pencil marks are enabled
+    if (text().isEmpty() && m_showPencilMarks) {
+        QString grid;
+        for (int row = 0; row < 3; ++row) {
+            for (int col = 0; col < 3; ++col) {
+                int num = row * 3 + col + 1;
+                if (m_availableMoves.count(num)) {
+                    grid += QString::number(num);
+                } else {
+                    grid += "·";  // Use middle dot for unavailable positions
+                }
+                if (col < 2) grid += " ";
+            }
+            if (row < 2) grid += "\n";
+        }
+        m_gridLabel->setText(grid);
+        m_gridLabel->show();
+    } else {
+        m_gridLabel->hide();
+    }
+}
+
+void SudokuCell::setPencilMarksVisible(bool visible)
+{
+    m_showPencilMarks = visible;
+    updateDisplay();
+}
+
+void SudokuCell::updateAvailableMoves(const std::set<int>& availableMoves)
+{
+    m_availableMoves = availableMoves;
+    updateDisplay();
 }
 
 void SudokuCell::updateStyle()
@@ -220,6 +269,7 @@ void SudokuCell::updateStyle()
         "   border-left: %4px solid %6;"
         "   border-right: %5px solid %6;"
         "   border-bottom: %7px solid %6;"
+        "   padding: 5px;"
         "}"
         "SudokuCell:focus {"
         "   background-color: %8;"
@@ -245,6 +295,7 @@ SudokuGame::SudokuGame(QWidget *parent)
     , ui(new Ui::SudokuGame)
     , m_selectedRow(-1)
     , m_selectedCol(-1)
+    , m_pencilMarksVisible(false)
 {
     ui->setupUi(this);
     
@@ -376,6 +427,7 @@ void SudokuGame::connectSignals()
     connect(ui->hintButton, &QPushButton::clicked, this, &SudokuGame::onHint);
     connect(ui->clearCellButton, &QPushButton::clicked, this, &SudokuGame::onClearCell);
     connect(ui->clearBoardButton, &QPushButton::clicked, this, &SudokuGame::onClearBoard);
+    connect(ui->toggleNotesButton, &QPushButton::clicked, this, &SudokuGame::onToggleNotes);
     
     // ------------------------------------------------------
     // Connect menu action signals
@@ -814,6 +866,32 @@ void SudokuGame::onHint()
     }
 }
 
+void SudokuGame::onToggleNotes()
+{
+    m_pencilMarksVisible = !m_pencilMarksVisible;
+    
+    // Update all cells to show/hide pencil marks
+    for (int row = 0; row < 9; ++row) {
+        for (int col = 0; col < 9; ++col) {
+            SudokuCell* cell = m_cells[row][col];
+            cell->setPencilMarksVisible(m_pencilMarksVisible);
+            
+            // Calculate available moves for empty cells
+            if (cell->value() == 0 && m_pencilMarksVisible) {
+                std::set<int> availableMoves;
+                for (int num = 1; num <= 9; ++num) {
+                    if (m_board.isValidPlacement(row, col, num)) {
+                        availableMoves.insert(num);
+                    }
+                }
+                cell->updateAvailableMoves(availableMoves);
+            }
+        }
+    }
+    
+    updateStatus(m_pencilMarksVisible ? "Pencil marks enabled" : "Pencil marks disabled");
+}
+
 void SudokuGame::onAbout()
 {
     QMessageBox::about(this, "About Sudoku",
@@ -845,7 +923,6 @@ void SudokuGame::onAbout()
 void SudokuGame::updateStatus(const QString &message)
 {
     ui->statusLabel->setText(message);
-    ui->statusbar->showMessage(message, 3000);
 }
 
 void SudokuGame::highlightRelatedCells(int row, int col)

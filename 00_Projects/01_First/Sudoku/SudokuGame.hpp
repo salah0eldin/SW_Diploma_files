@@ -24,6 +24,7 @@
 #include <QPushButton>
 #include <QVector>
 #include <QLabel>
+#include <set>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -85,11 +86,21 @@ private:
     bool m_matchingNumber;
     bool m_error;
     bool m_selected;
+    bool m_showPencilMarks;
+    QLabel *m_gridLabel;
     
     // ------------------------------------------------------
     // Private Methods
     // ------------------------------------------------------
     void updateStyle();
+    void updateDisplay();
+    
+public:
+    void setPencilMarksVisible(bool visible);
+    void updateAvailableMoves(const std::set<int>& availableMoves);
+    
+private:
+    std::set<int> m_availableMoves;
 };
 
 // =================================================
@@ -123,6 +134,7 @@ private slots:
     void onClearCell();
     void onClearBoard();
     void onHint();
+    void onToggleNotes();
     void onAbout();
 
 private:
@@ -142,6 +154,7 @@ private:
     
     int m_selectedRow;                                // Currently selected cell
     int m_selectedCol;
+    bool m_pencilMarksVisible;
     
     // ------------------------------------------------------
     // Private Setup Methods
