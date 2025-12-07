@@ -1,7 +1,15 @@
-// =================================================
-// main.cpp
-// Entry point for Sudoku Qt application
-// =================================================
+/**
+ * @file main.cpp
+ * @brief Entry point for Sudoku Qt application
+ *
+ * This file initializes the Qt application framework and launches the
+ * main Sudoku game window.
+ *
+ * @author Salah-Eldin Hassen
+ * @date December 2025
+ * @version 1.0
+ * @project Sudoku Game - SW Diploma
+ */
 
 #include "SudokuGame.hpp"
 #include <QApplication>

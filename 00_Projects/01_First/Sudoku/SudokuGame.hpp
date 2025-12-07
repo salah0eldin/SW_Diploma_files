@@ -1,7 +1,16 @@
-// =================================================
-// SudokuGame.hpp
-// Game logic and Qt GUI integration
-// =================================================
+/**
+ * @file SudokuGame.hpp
+ * @brief Game logic and Qt GUI integration
+ *
+ * This header defines the main game window and custom cell widgets for
+ * the Qt-based Sudoku application. It integrates the board logic and solver
+ * with an interactive visual interface.
+ *
+ * @author Salah-Eldin Hassen
+ * @date December 2025
+ * @version 1.0
+ * @project Sudoku Game - SW Diploma
+ */
 
 #pragma once
 

@@ -1,7 +1,16 @@
-// =================================================
-// SudokuSolver.cpp
-// Implementation of backtracking solver
-// =================================================
+/**
+ * @file SudokuSolver.cpp
+ * @brief Implementation of backtracking solver
+ *
+ * This file implements the recursive backtracking algorithm for solving
+ * Sudoku puzzles, including helper methods for cell searching and
+ * solution counting.
+ *
+ * @author Salah-Eldin Hassen
+ * @date December 2025
+ * @version 1.0
+ * @project Sudoku Game - SW Diploma
+ */
 
 #include "SudokuSolver.hpp"
 

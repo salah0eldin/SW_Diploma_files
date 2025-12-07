@@ -1,7 +1,15 @@
-// =================================================
-// SudokuBoard.cpp
-// Implementation of Sudoku board operations
-// =================================================
+/**
+ * @file SudokuBoard.cpp
+ * @brief Implementation of Sudoku board operations
+ *
+ * This file implements all board management functions including cell access,
+ * validation logic, state management, and file I/O operations.
+ *
+ * @author Salah-Eldin Hassen
+ * @date December 2025
+ * @version 1.0
+ * @project Sudoku Game - SW Diploma
+ */
 
 #include "SudokuBoard.hpp"
 #include <iostream>

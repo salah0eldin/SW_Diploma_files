@@ -1,7 +1,15 @@
-// =================================================
-// SudokuGame.cpp
-// Implementation of Qt GUI and game logic
-// =================================================
+/**
+ * @file SudokuGame.cpp
+ * @brief Implementation of Qt GUI and game logic
+ *
+ * This file implements the Qt-based graphical interface including the
+ * custom cell widgets, number pad, menu handlers, and game state management.
+ *
+ * @author Salah-Eldin Hassen
+ * @date December 2025
+ * @version 1.0
+ * @project Sudoku Game - SW Diploma
+ */
 
 #include "SudokuGame.hpp"
 #include "./ui_sudoku.h"

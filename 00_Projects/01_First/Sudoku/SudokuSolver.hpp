@@ -1,7 +1,16 @@
-// =================================================
-// SudokuSolver.hpp
-// Backtracking solver for Sudoku puzzles
-// =================================================
+/**
+ * @file SudokuSolver.hpp
+ * @brief Backtracking solver for Sudoku puzzles
+ *
+ * This header defines the solver class that uses recursive backtracking
+ * algorithm to find solutions for Sudoku puzzles. It can solve puzzles,
+ * verify solvability, and count possible solutions.
+ *
+ * @author Salah-Eldin Hassen
+ * @date December 2025
+ * @version 1.0
+ * @project Sudoku Game - SW Diploma
+ */
 
 #pragma once
 

@@ -1,7 +1,16 @@
-// =================================================
-// SudokuBoard.hpp
-// Board representation, validation, and basic I/O
-// =================================================
+/**
+ * @file SudokuBoard.hpp
+ * @brief Board representation, validation, and basic I/O
+ *
+ * This header defines the core Sudoku board class that manages the 9x9 grid,
+ * validates moves according to Sudoku rules, and handles file I/O operations
+ * for saving and loading puzzle states.
+ *
+ * @author Salah-Eldin Hassen
+ * @date December 2025
+ * @version 1.0
+ * @project Sudoku Game - SW Diploma
+ */
 
 #pragma once
 
