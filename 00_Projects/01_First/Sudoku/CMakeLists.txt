@@ -38,6 +38,10 @@ set(PROJECT_SOURCES
     SudokuSolver.hpp
     SudokuSolver.cpp
     
+    # Generator (Optional puzzle generation)
+    SudokuGenerator.hpp
+    SudokuGenerator.cpp
+    
     # Game logic with Qt GUI integration
     SudokuGame.hpp
     SudokuGame.cpp

@@ -30,6 +30,7 @@ SudokuCell::SudokuCell(int row, int col, QWidget *parent)
     , m_col(col)
     , m_initial(false)
     , m_highlighted(false)
+    , m_matchingNumber(false)
     , m_error(false)
     , m_selected(false)
 {
@@ -70,6 +71,12 @@ void SudokuCell::setInitial(bool initial)
 void SudokuCell::setHighlighted(bool highlighted)
 {
     m_highlighted = highlighted;
+    updateStyle();
+}
+
+void SudokuCell::setMatchingNumber(bool matching)
+{
+    m_matchingNumber = matching;
     updateStyle();
 }
 
@@ -169,6 +176,11 @@ void SudokuCell::updateStyle()
     
     if (m_highlighted) {
         bgColor = "#3d4448";
+    }
+    
+    if (m_matchingNumber) {
+        bgColor = "#6c5ce7";
+        textColor = "#ffffff";
     }
     
     if (m_selected) {
@@ -473,6 +485,20 @@ void SudokuGame::onCellSelected(int row, int col)
     highlightRelatedCells(row, col);
     
     // ------------------------------------------------------
+    // Highlight all cells with the same number (purple glow)
+    // ------------------------------------------------------
+    int selectedValue = m_cells[row][col]->value();
+    if (selectedValue >= 1 && selectedValue <= 9) {
+        for (int r = 0; r < 9; ++r) {
+            for (int c = 0; c < 9; ++c) {
+                if ((r != row || c != col) && m_cells[r][c]->value() == selectedValue) {
+                    m_cells[r][c]->setMatchingNumber(true);
+                }
+            }
+        }
+    }
+    
+    // ------------------------------------------------------
     // Update status
     // ------------------------------------------------------
     QString status = QString("Selected cell: Row %1, Column %2").arg(row + 1).arg(col + 1);
@@ -489,6 +515,29 @@ void SudokuGame::onCellValueChanged(int row, int col, int value)
     // ------------------------------------------------------
     if (!m_board.isFixed(row, col)) {
         m_board.setValue(row, col, value);
+    }
+    
+    // ------------------------------------------------------
+    // Update matching number highlights if this is the selected cell
+    // ------------------------------------------------------
+    if (row == m_selectedRow && col == m_selectedCol) {
+        // Clear previous matching highlights
+        for (int r = 0; r < 9; ++r) {
+            for (int c = 0; c < 9; ++c) {
+                m_cells[r][c]->setMatchingNumber(false);
+            }
+        }
+        
+        // Highlight cells with the new matching number
+        if (value >= 1 && value <= 9) {
+            for (int r = 0; r < 9; ++r) {
+                for (int c = 0; c < 9; ++c) {
+                    if ((r != row || c != col) && m_cells[r][c]->value() == value) {
+                        m_cells[r][c]->setMatchingNumber(true);
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -516,12 +565,37 @@ void SudokuGame::onNumberPadClicked(int number)
 
 void SudokuGame::onNewGame()
 {
-    loadSamplePuzzle();
-    m_selectedRow = -1;
-    m_selectedCol = -1;
-    clearHighlights();
-    clearErrors();
-    updateStatus("New game started! Select a cell to begin.");
+    // ------------------------------------------------------
+    // Get selected difficulty from combo box
+    // ------------------------------------------------------
+    int difficultyIndex = ui->difficultyCombo->currentIndex();
+    Difficulty difficulty;
+    
+    switch (difficultyIndex) {
+        case 0: difficulty = Difficulty::EASY; break;
+        case 1: difficulty = Difficulty::MEDIUM; break;
+        case 2: difficulty = Difficulty::HARD; break;
+        default: difficulty = Difficulty::EASY; break;
+    }
+    
+    // ------------------------------------------------------
+    // Generate new puzzle
+    // ------------------------------------------------------
+    updateStatus("Generating puzzle...");
+    
+    if (m_generator.generate(m_board, difficulty)) {
+        syncBoardToGUI();
+        m_selectedRow = -1;
+        m_selectedCol = -1;
+        clearHighlights();
+        clearErrors();
+        
+        QString difficultyName = ui->difficultyCombo->currentText();
+        updateStatus(QString("New %1 puzzle generated! Select a cell to begin.").arg(difficultyName));
+    } else {
+        loadSamplePuzzle();
+        updateStatus("Failed to generate puzzle. Loaded sample puzzle instead.");
+    }
 }
 
 void SudokuGame::onLoadPuzzle()
@@ -759,6 +833,7 @@ void SudokuGame::clearHighlights()
     for (int row = 0; row < 9; ++row) {
         for (int col = 0; col < 9; ++col) {
             m_cells[row][col]->setHighlighted(false);
+            m_cells[row][col]->setMatchingNumber(false);
             m_cells[row][col]->setSelected(false);
         }
     }

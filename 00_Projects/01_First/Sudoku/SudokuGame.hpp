@@ -16,6 +16,7 @@
 
 #include "SudokuBoard.hpp"
 #include "SudokuSolver.hpp"
+#include "SudokuGenerator.hpp"
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QLineEdit>
@@ -60,6 +61,7 @@ public:
     // Visual State
     // ------------------------------------------------------
     void setHighlighted(bool highlighted);
+    void setMatchingNumber(bool matching);
     void setError(bool error);
     void setSelected(bool selected);
 
@@ -79,6 +81,7 @@ private:
     int m_col;
     bool m_initial;
     bool m_highlighted;
+    bool m_matchingNumber;
     bool m_error;
     bool m_selected;
     
@@ -128,6 +131,7 @@ private:
     
     SudokuBoard m_board;                              // Core board logic
     SudokuSolver m_solver;                            // Solver logic
+    SudokuGenerator m_generator;                      // Puzzle generator
     
     QVector<QVector<SudokuCell*>> m_cells;            // GUI cells
     QVector<QPushButton*> m_numberPadButtons;         // Number pad buttons
