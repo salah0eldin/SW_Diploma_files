@@ -184,7 +184,7 @@ void SudokuCell::updateDisplay()
                 if (m_availableMoves.count(num)) {
                     grid += QString::number(num);
                 } else {
-                    grid += "·";  // Use middle dot for unavailable positions
+                    grid += "·";  // Use middle dot for unavailable positions 
                 }
                 if (col < 2) grid += " ";
             }
