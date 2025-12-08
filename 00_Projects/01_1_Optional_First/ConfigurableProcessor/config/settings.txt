@@ -1,0 +1,11 @@
+# Sample configuration for the Configurable Processor system.
+# Set the processor type: Text, Numeric, Image, or Audio.
+
+# Processor Configuration
+Processor.Options.Type=Image
+Processor.Options.Threshold=0.5
+Processor.Options.MaxRetries=3
+
+# Additional Options (can be extended)
+Processor.Options.Verbose=true
+Processor.Options.LogLevel=INFO
