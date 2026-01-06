@@ -1,5 +1,0 @@
-/mnt/d_drive/Learning/SW_Diploma/00_Projects/02_Final/implementation/build/CMakeFiles/AirlineReservationSystem.dir
-/mnt/d_drive/Learning/SW_Diploma/00_Projects/02_Final/implementation/build/CMakeFiles/edit_cache.dir
-/mnt/d_drive/Learning/SW_Diploma/00_Projects/02_Final/implementation/build/CMakeFiles/rebuild_cache.dir
-/mnt/d_drive/Learning/SW_Diploma/00_Projects/02_Final/implementation/build/CMakeFiles/AirlineReservationSystem_autogen_timestamp_deps.dir
-/mnt/d_drive/Learning/SW_Diploma/00_Projects/02_Final/implementation/build/CMakeFiles/AirlineReservationSystem_autogen.dir

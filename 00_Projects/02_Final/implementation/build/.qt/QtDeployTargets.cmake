@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_AirlineReservationSystem_FILE /mnt/d_drive/Learning/SW_Diploma/00_Projects/02_Final/implementation/build/AirlineReservationSystem)
-set(__QT_DEPLOY_TARGET_AirlineReservationSystem_TYPE EXECUTABLE)
