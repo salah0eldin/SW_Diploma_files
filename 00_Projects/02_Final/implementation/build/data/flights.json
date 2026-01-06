@@ -1,0 +1,73 @@
+[
+    {
+        "aircraftId": "AC001",
+        "aircraftType": "Boeing 737",
+        "arrivalDateTime": "2025-12-15T11:45:00",
+        "attendantIds": [
+            "FA001",
+            "FA002",
+            "FA003"
+        ],
+        "businessPrice": 850,
+        "coPilotId": "PL002",
+        "departureDateTime": "2025-12-15T08:30:00",
+        "destination": "Los Angeles (LAX)",
+        "economyPrice": 350,
+        "firstClassPrice": 1500,
+        "flightNumber": "AA123",
+        "gate": "A12",
+        "occupiedSeats": [
+        ],
+        "origin": "New York (JFK)",
+        "pilotId": "PL001",
+        "status": 0,
+        "totalSeats": 180
+    },
+    {
+        "aircraftId": "AC003",
+        "aircraftType": "Boeing 737",
+        "arrivalDateTime": "2025-12-20T20:15:00",
+        "attendantIds": [
+            "FA006",
+            "FA007",
+            "FA008"
+        ],
+        "businessPrice": 750,
+        "coPilotId": "PL006",
+        "departureDateTime": "2025-12-20T15:45:00",
+        "destination": "Miami (MIA)",
+        "economyPrice": 300,
+        "firstClassPrice": 1400,
+        "flightNumber": "AA789",
+        "gate": "C15",
+        "occupiedSeats": [
+        ],
+        "origin": "Chicago (ORD)",
+        "pilotId": "PL005",
+        "status": 0,
+        "totalSeats": 180
+    },
+    {
+        "aircraftId": "AC002",
+        "aircraftType": "Airbus A320",
+        "arrivalDateTime": "2025-12-20T13:30:00",
+        "attendantIds": [
+            "FA004",
+            "FA005"
+        ],
+        "businessPrice": 650,
+        "coPilotId": "PL004",
+        "departureDateTime": "2025-12-20T09:00:00",
+        "destination": "Miami (MIA)",
+        "economyPrice": 250,
+        "firstClassPrice": 1200,
+        "flightNumber": "BA456",
+        "gate": "B12",
+        "occupiedSeats": [
+        ],
+        "origin": "Chicago (ORD)",
+        "pilotId": "PL003",
+        "status": 0,
+        "totalSeats": 150
+    }
+]

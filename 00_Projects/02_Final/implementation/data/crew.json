@@ -1,0 +1,128 @@
+[
+    {
+        "crewId": "PL001",
+        "name": "Captain Sarah Connor",
+        "type": 0,
+        "totalFlightHours": 5000,
+        "maxFlightHours": 1000,
+        "licenseNumber": "ATP-12345",
+        "isAvailable": true
+    },
+    {
+        "crewId": "PL002",
+        "name": "Captain James Kirk",
+        "type": 1,
+        "totalFlightHours": 4500,
+        "maxFlightHours": 1000,
+        "licenseNumber": "ATP-12346",
+        "isAvailable": true
+    },
+    {
+        "crewId": "PL003",
+        "name": "Captain John Smith",
+        "type": 0,
+        "totalFlightHours": 6000,
+        "maxFlightHours": 1000,
+        "licenseNumber": "ATP-12347",
+        "isAvailable": true
+    },
+    {
+        "crewId": "PL004",
+        "name": "Captain Jane Doe",
+        "type": 1,
+        "totalFlightHours": 3800,
+        "maxFlightHours": 1000,
+        "licenseNumber": "ATP-12348",
+        "isAvailable": true
+    },
+    {
+        "crewId": "PL005",
+        "name": "Captain Michael Brown",
+        "type": 0,
+        "totalFlightHours": 5500,
+        "maxFlightHours": 1000,
+        "licenseNumber": "ATP-12349",
+        "isAvailable": true
+    },
+    {
+        "crewId": "PL006",
+        "name": "Captain Emily Davis",
+        "type": 1,
+        "totalFlightHours": 4200,
+        "maxFlightHours": 1000,
+        "licenseNumber": "ATP-12350",
+        "isAvailable": true
+    },
+    {
+        "crewId": "FA001",
+        "name": "Emma Watson",
+        "type": 2,
+        "totalFlightHours": 2000,
+        "maxFlightHours": 900,
+        "licenseNumber": "FA-5001",
+        "isAvailable": true
+    },
+    {
+        "crewId": "FA002",
+        "name": "John Cena",
+        "type": 2,
+        "totalFlightHours": 1800,
+        "maxFlightHours": 900,
+        "licenseNumber": "FA-5002",
+        "isAvailable": true
+    },
+    {
+        "crewId": "FA003",
+        "name": "Jennifer Lawrence",
+        "type": 2,
+        "totalFlightHours": 2200,
+        "maxFlightHours": 900,
+        "licenseNumber": "FA-5003",
+        "isAvailable": true
+    },
+    {
+        "crewId": "FA004",
+        "name": "Chris Hemsworth",
+        "type": 2,
+        "totalFlightHours": 1900,
+        "maxFlightHours": 900,
+        "licenseNumber": "FA-5004",
+        "isAvailable": true
+    },
+    {
+        "crewId": "FA005",
+        "name": "Scarlett Johansson",
+        "type": 2,
+        "totalFlightHours": 2100,
+        "maxFlightHours": 900,
+        "licenseNumber": "FA-5005",
+        "isAvailable": true
+    },
+    {
+        "crewId": "FA006",
+        "name": "Tom Holland",
+        "type": 2,
+        "totalFlightHours": 1500,
+        "maxFlightHours": 900,
+        "licenseNumber": "FA-5006",
+        "isAvailable": true
+    },
+    {
+        "crewId": "FA007",
+        "name": "Zendaya Coleman",
+        "type": 2,
+        "totalFlightHours": 1600,
+        "maxFlightHours": 900,
+        "licenseNumber": "FA-5007",
+        "isAvailable": true
+    },
+    {
+        "crewId": "FA008",
+        "name": "Robert Downey Jr",
+        "type": 2,
+        "totalFlightHours": 2400,
+        "maxFlightHours": 900,
+        "licenseNumber": "FA-5008",
+        "isAvailable": true
+    }
+]

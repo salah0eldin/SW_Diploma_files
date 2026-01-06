@@ -1,0 +1,41 @@
+[
+    {
+        "userId": "USR001",
+        "username": "admin",
+        "password": "admin123",
+        "role": 0,
+        "createdAt": "2025-01-01T00:00:00",
+        "isActive": true,
+        "type": "Administrator",
+        "department": "Management",
+        "accessLevel": "Full"
+    },
+    {
+        "userId": "USR002",
+        "username": "agent",
+        "password": "agent123",
+        "role": 1,
+        "createdAt": "2025-01-01T00:00:00",
+        "isActive": true,
+        "type": "BookingAgent",
+        "agentId": "AGT001",
+        "agencyName": "Sky Travel Agency",
+        "totalBookings": 0,
+        "commissionRate": 0.05
+    },
+    {
+        "userId": "USR003",
+        "username": "passenger",
+        "password": "pass123",
+        "role": 2,
+        "createdAt": "2025-01-01T00:00:00",
+        "isActive": true,
+        "type": "Passenger",
+        "fullName": "John Doe",
+        "email": "john.doe@example.com",
+        "phone": "+1-555-0100",
+        "address": "123 Main St, City, Country",
+        "loyaltyPoints": 0,
+        "travelHistory": []
+    }
+]
